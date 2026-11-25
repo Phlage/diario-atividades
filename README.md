@@ -51,13 +51,8 @@ flutter create --project-name diario_atividades --org dev.phlage --platforms and
 flutter pub get
 ```
 
-3. Em `android/app/src/main/AndroidManifest.xml`, antes de `<application`,
-   adicione:
-
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-```
+3. As permissões `INTERNET` e `ACCESS_COARSE_LOCATION` já estão em
+   `android/app/src/main/AndroidManifest.xml`.
 
 4. Firebase (configuração local, não versionada):
    - crie um projeto no console do Firebase;
@@ -77,7 +72,16 @@ flutter test integration_test/app_test.dart -d <id-do-aparelho>
 flutter run
 ```
 
-6. Release (exige `android/key.properties` e um keystore locais, fora do Git):
+6. Release. A assinatura lê `android/key.properties` (fora do Git), no formato:
+
+```properties
+storePassword=<senha>
+keyPassword=<senha>
+keyAlias=diario
+storeFile=/caminho/absoluto/diario-release.jks
+```
+
+Sem esse arquivo, o build de release usa a chave de debug.
 
 ```bash
 flutter build apk --release
