@@ -1,0 +1,28 @@
+name: diario_atividades
+description: Diário de atividades ao ar livre com o clima do local.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cloud_firestore: ^5.0.0
+  firebase_auth: ^5.0.0
+  firebase_core: ^3.0.0
+  geolocator: ^13.0.0
+  http: ^1.2.0
+  provider: ^6.1.0
+  shared_preferences: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

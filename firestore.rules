@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cada usuário só acessa as próprias atividades.
+    match /users/{uid}/atividades/{atividadeId} {
+      function dono() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+
+      function atividadeValida() {
+        return request.resource.data.uid == uid
+          && request.resource.data.tipo is string
+          && request.resource.data.distanciaKm is number
+          && request.resource.data.distanciaKm > 0
+          && request.resource.data.duracaoMin is int
+          && request.resource.data.data is int;
+      }
+
+      allow read, delete: if dono();
+      allow create, update: if dono() && atividadeValida();
+    }
+
+    // Qualquer outro caminho é negado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
